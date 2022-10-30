@@ -2,7 +2,6 @@ package com.example.homework_1_compose
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,19 +28,17 @@ fun createPortraitFragment(
 
 class PortraitFragment : Fragment() {
 
-    var count = INITIAL_COUNT
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var count = arguments?.getInt("key")!!
+        val count = arguments?.getInt("key")!!
         val view = inflater.inflate(R.layout.fragment_portrait, container, false).apply {
             findViewById<ComposeView>(R.id.compose_view_portrait).setContent {
                 Homework1composeTheme {
-                    count = PortraitContent(count)
-                    (activity as? FragmentToActivityCommunication)?.setCountOnMain(count)
+                    val countChanged = PortraitContent(count)
+                    (activity as? FragmentToActivityCommunication)?.setCountOnMain(countChanged)
                 }
             }
         }

@@ -2,10 +2,7 @@ package com.example.homework_1_compose
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.activity.ComponentActivity
 
 const val PORTRAIT = "PORTRAIT"
 const val LANDSCAPE = "LANDSCAPE"
@@ -13,7 +10,7 @@ const val INITIAL_COUNT = 4
 
 class MainActivity : AppCompatActivity(), FragmentToActivityCommunication {
 
-    var count: Int = INITIAL_COUNT
+    private var count: Int = INITIAL_COUNT
 
     private fun getScreenOrientation(): String {
         return when (resources.configuration.orientation) {
@@ -31,7 +28,7 @@ class MainActivity : AppCompatActivity(), FragmentToActivityCommunication {
             with(savedInstanceState) {
                getInt("key")
             }
-        } else INITIAL_COUNT
+        } else count
 
         val windowInfo = getScreenOrientation()
 
@@ -39,7 +36,6 @@ class MainActivity : AppCompatActivity(), FragmentToActivityCommunication {
         when (windowInfo) {
             PORTRAIT -> transaction.replace(R.id.container, createPortraitFragment(currentCount))
             LANDSCAPE -> transaction.replace(R.id.container, createLandscapeFragment(currentCount))
-            else -> ""
         }
         transaction.commit()
     }
@@ -54,8 +50,8 @@ class MainActivity : AppCompatActivity(), FragmentToActivityCommunication {
         savedInstanceState.getInt("key")
     }
 
-    override fun setCountOnMain(_count: Int) {
-        this.count = _count
+    override fun setCountOnMain(count: Int) {
+        this.count = count
     }
 }
 

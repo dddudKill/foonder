@@ -1,7 +1,6 @@
 package com.example.homework_1_compose
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,10 +13,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
 @Composable
 fun ContentColumn(count: Int, scope: RowScope) {
     with(scope) {
-        LazyColumn(
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .padding(start = 8.dp, end = 8.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color.Black,
+                    shape = RoundedCornerShape(16.dp)
+                )
+        ) {
+            LazyColumn(
+                contentPadding = PaddingValues(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(count) { index ->
+                    NumberBox(number = index + 1)
+                }
+            }
+        }
+    }
+
+    /*val listState = rememberScrollState()
+
+    val coroutineScope = rememberCoroutineScope()
+
+
+    with(scope) {
+        Column(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
@@ -28,15 +57,18 @@ fun ContentColumn(count: Int, scope: RowScope) {
                     color = Color.Black,
                     shape = RoundedCornerShape(16.dp)
                 )
-                .padding(8.dp),
+                .padding(8.dp)
+                .verticalScroll(listState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(count) { index ->
-                NumberBox(number = index + 1)
+            for (i in 1..count) {
+                NumberBox(
+                    number = i
+                )
             }
         }
-    }
+    }*/
 }
 
 @Composable
@@ -51,5 +83,4 @@ fun NumberBox(number: Int) {
     ) {
         Text(text = "$number", color = Color.White, fontSize = 24.sp)
     }
-    //Spacer(modifier = Modifier.height(10.dp))
 }

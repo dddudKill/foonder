@@ -2,11 +2,9 @@ package com.example.homework_1_compose
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -30,19 +28,17 @@ fun createLandscapeFragment(
 
 class LandscapeFragment : Fragment() {
 
-    var count = INITIAL_COUNT
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        count = arguments?.getInt("key")!!
+        val count = arguments?.getInt("key")!!
         val view = inflater.inflate(R.layout.fragment_landscape, container, false).apply {
             findViewById<ComposeView>(R.id.compose_view_landscape).setContent {
                 Homework1composeTheme {
-                    count = LandscapeContent(count)
-                    (activity as? FragmentToActivityCommunication)?.setCountOnMain(count)
+                    val countChanged = LandscapeContent(count)
+                    (activity as? FragmentToActivityCommunication)?.setCountOnMain(countChanged)
                 }
             }
         }
