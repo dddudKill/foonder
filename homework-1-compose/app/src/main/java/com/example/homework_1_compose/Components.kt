@@ -1,17 +1,22 @@
 package com.example.homework_1_compose
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.homework_1_compose.ui.theme.SeaFoam
@@ -79,13 +84,64 @@ fun ContentColumn(count: Int, scope: RowScope) {
 
 @Composable
 fun NumberBox(number: Int) {
-
     Box(
         modifier = Modifier
             .width(20.dp)
             .aspectRatio(1f)
             .clip(RoundedCornerShape(8.dp))
             .background(if (number % 2 == 1) Color.Blue else Color.Red),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "$number", color = Color.White, fontSize = 24.sp)
+    }
+}
+
+private enum class ComponentState { Pressed, Released }
+
+@Composable
+fun NumberBox(number: Int, animated: Boolean = true) {
+    var toState by remember {
+        mutableStateOf(ComponentState.Released)
+    }
+    val modifier = Modifier.pointerInput(Unit) {
+        detectTapGestures(onPress = {
+            toState = ComponentState.Pressed
+            tryAwaitRelease()
+            toState = ComponentState.Released
+        })
+    }
+
+    val transition: Transition<ComponentState> = updateTransition(targetState = toState, label = "")
+    val scale: Float by transition.animateFloat(
+        transitionSpec = { spring(stiffness = 50f) }, label = ""
+    ) { state ->
+        if (state == ComponentState.Pressed) 1.2f else 1f
+    }
+
+    val color: Color by transition.animateColor(
+        transitionSpec = {
+            if (this.initialState == ComponentState.Pressed
+                && this.targetState == ComponentState.Released
+            ) {
+                spring(stiffness = 50f)
+            } else {
+                tween(delayMillis = 150)
+            }
+        }, label = ""
+    ) { state ->
+        when (state) {
+            ComponentState.Pressed -> MaterialTheme.colors.primary
+            ComponentState.Released -> if (number % 2 == 1) Color.Blue else Color.Red
+        }
+    }
+    Box(
+        modifier = modifier
+            .padding(top = 20.dp)
+            .width(20.dp)
+            .aspectRatio(1f)
+            .clip(RoundedCornerShape(8.dp))
+            .requiredSize((100 * scale).dp)
+            .background(color),
         contentAlignment = Alignment.Center
     ) {
         Text(text = "$number", color = Color.White, fontSize = 24.sp)

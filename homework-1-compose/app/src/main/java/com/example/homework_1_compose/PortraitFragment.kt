@@ -1,5 +1,6 @@
 package com.example.homework_1_compose
 
+import android.content.res.Configuration
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
