@@ -709,6 +709,7 @@ id checkbox
 id checked
 id chronometer
 id collapseActionView
+id compose_view_item
 id compose_view_landscape
 id compose_view_portrait
 id compose_view_saveable_id_tag
@@ -867,6 +868,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
 layout custom_dialog
+layout fragment_item
 layout fragment_landscape
 layout fragment_portrait
 layout notification_action

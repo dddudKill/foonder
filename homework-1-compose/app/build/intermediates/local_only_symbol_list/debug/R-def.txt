@@ -9,10 +9,12 @@ color teal_700
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+id compose_view_item
 id compose_view_landscape
 id compose_view_portrait
 id container
 layout activity_main
+layout fragment_item
 layout fragment_landscape
 layout fragment_portrait
 mipmap ic_launcher

@@ -1,8 +1,10 @@
 package com.example.homework_1_compose
 
+import android.widget.Toast
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
+//import androidx.compose.foundation.gestures.ModifierLocalScrollableContainerProvider.value
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -21,11 +23,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.homework_1_compose.ui.theme.SeaFoam
 
+
+const val PORTRAIT_LAYOUT = 3
+const val LANDSCAPE_LAYOUT = 4
+
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ContentGrid(count: Int, orientation: String) {
+fun ContentGrid(count: Int, orientation: String, callback: (value: Int, coloValue: Int) -> Unit) {
 
-    val itemsPerRow = if (orientation == PORTRAIT) 3 else 4
+    val itemsPerRow = if (orientation == PORTRAIT) PORTRAIT_LAYOUT else LANDSCAPE_LAYOUT
 
     Box(
         modifier = Modifier
@@ -47,7 +54,7 @@ fun ContentGrid(count: Int, orientation: String) {
             horizontalArrangement = Arrangement.spacedBy(40.dp)
         ) {
             items(count) { index ->
-                NumberBox(number = index + 1)
+                NumberBox(number = index + 1, callback)
             }
         }
     }
@@ -83,13 +90,21 @@ fun ContentColumn(count: Int, scope: RowScope) {
 }*/
 
 @Composable
-fun NumberBox(number: Int) {
+fun NumberBox(number: Int, callback: (value: Int, colorValue: Int) -> Unit) {
+
+    val color = if (number % 2 == 1) Color.Blue else Color.Red
+
+    val colorValue = if (color == Color.Blue) 0 else 1
+
     Box(
         modifier = Modifier
             .width(20.dp)
             .aspectRatio(1f)
             .clip(RoundedCornerShape(8.dp))
-            .background(if (number % 2 == 1) Color.Blue else Color.Red),
+            .background(color)
+            .clickable {
+              callback(number, colorValue)
+            },
         contentAlignment = Alignment.Center
     ) {
         Text(text = "$number", color = Color.White, fontSize = 24.sp)
@@ -98,7 +113,7 @@ fun NumberBox(number: Int) {
 
 private enum class ComponentState { Pressed, Released }
 
-@Composable
+/*@Composable
 fun NumberBox(number: Int, animated: Boolean = true) {
     var toState by remember {
         mutableStateOf(ComponentState.Released)
@@ -146,10 +161,10 @@ fun NumberBox(number: Int, animated: Boolean = true) {
     ) {
         Text(text = "$number", color = Color.White, fontSize = 24.sp)
     }
-}
+}*/
 
 @Composable
-fun portraitContent(count: Int): Int {
+fun portraitContent(count: Int, callback: (value: Int, colorValue: Int) -> Unit): Int {
 
     var counter by remember {
         mutableStateOf(count)
@@ -169,7 +184,7 @@ fun portraitContent(count: Int): Int {
                 .fillMaxWidth()
                 .fillMaxHeight(),
         ) {
-            ContentGrid(counter, PORTRAIT)
+            ContentGrid(counter, PORTRAIT, callback)
         }
         Box(
             modifier = Modifier
@@ -196,7 +211,7 @@ fun portraitContent(count: Int): Int {
 }
 
 @Composable
-fun landscapeContent(count: Int): Int {
+fun landscapeContent(count: Int, callback: (value: Int, colorValue: Int) -> Unit): Int {
     var counter by remember {
         mutableStateOf(count)
     }
@@ -213,7 +228,7 @@ fun landscapeContent(count: Int): Int {
                 .fillMaxHeight()
                 .weight(6f),
         ) {
-            ContentGrid(counter, LANDSCAPE)
+            ContentGrid(counter, LANDSCAPE, callback)
         }
         Box(
             modifier = Modifier

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 const val PORTRAIT = "PORTRAIT"
 const val LANDSCAPE = "LANDSCAPE"
-const val INITIAL_COUNT = 0
+const val INITIAL_COUNT = 2
 
 class MainActivity : AppCompatActivity(), FragmentToActivityCommunication {
 
