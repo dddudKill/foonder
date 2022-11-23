@@ -15,7 +15,7 @@ const val API_KEY = "GkXGkAFHmtNjfPZoy18GALzVNOOreyeY"
 interface IAccessor {
     @GET("/v1/gifs/trending")
     @Headers("X-User-Agent: GIF")
-    suspend fun getData(@Query("offset") offset: Int, @Query("limit") limit: Int): Data //List<Gif>
+    suspend fun getData(@Query("offset") offset: Int, @Query("limit") limit: Int): Data
 
 
     companion object {

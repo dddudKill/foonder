@@ -10,11 +10,12 @@ import com.example.homework_2.objects.Gif
 class GifViewHolder(val view: View): RecyclerView.ViewHolder(view) {
     protected val image by lazy { view.findViewById<ImageView>(R.id.image) }
 
-    fun bind(gif: Gif) {
+    fun bind(gif: Gif, callback: (gif: Gif) -> Unit) {
 
         val url = gif.gifUrl()
         Glide.with(view)
             .load(url)
             .into(image)
+        view.setOnClickListener{ callback(gif) }
     }
 }

@@ -14,6 +14,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.homework_2.R
+import com.example.homework_2.objects.Gif
 import com.example.homework_2.ui.main.gif.GifListAdapter
 import com.example.homework_2.ui.main.load_state.GifsLoadStateAdapter
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,7 @@ class MainFragment : Fragment() {
     }
 
     private val viewModel by viewModels<MainViewModel>()
-    private val gifListAdapter = GifListAdapter()
+    private val gifListAdapter = GifListAdapter { gif: Gif -> gifItemClicked(gif) }
     private val loadStateAdapter = GifsLoadStateAdapter { gifListAdapter.retry() }
 
     override fun onCreateView(
@@ -88,5 +89,9 @@ class MainFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun gifItemClicked(gif : Gif) {
+        Toast.makeText(context, "Clicked: ${gif.gifTitle()}", Toast.LENGTH_LONG).show()
     }
 }
