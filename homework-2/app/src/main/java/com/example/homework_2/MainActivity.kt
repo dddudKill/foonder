@@ -2,6 +2,7 @@ package com.example.homework_2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.homework_2.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
