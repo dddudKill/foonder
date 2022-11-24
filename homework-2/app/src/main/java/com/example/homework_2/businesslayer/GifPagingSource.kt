@@ -8,11 +8,11 @@ import com.example.homework_2.objects.Gif
 const val NETWORK_PAGE_SIZE = 25
 
 class GifPagingSource(private val service: IAccessor) : PagingSource<Int, Gif>() {
+
     override fun getRefreshKey(state: PagingState<Int, Gif>): Int? {
-//        val anchorPosition = state.anchorPosition ?: return null
-//        val offset = state.closestPageToPosition(anchorPosition) ?: return null
-//        return offset.prevKey?.plus(25) ?: offset.nextKey?.minus(25)
-        return state.anchorPosition
+        val anchorPosition = state.anchorPosition ?: return null
+        val offset = state.closestPageToPosition(anchorPosition) ?: return null
+        return offset.prevKey?.plus(25) ?: offset.nextKey?.minus(25)
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Gif> {

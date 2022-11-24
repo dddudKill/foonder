@@ -2,7 +2,7 @@ package com.example.homework_2.objects
 
 import com.google.gson.annotations.SerializedName
 
-class Gif {
+class Gif : java.io.Serializable {
     var id = ""
     var title = ""
     @SerializedName("images") var images: Images = Images(Original(""))
@@ -14,4 +14,4 @@ class Gif {
 
 data class Images (@SerializedName("original") var orig: Original)
 
-data class Original (var url: String)
+data class Original (@SerializedName("webp") var url: String)

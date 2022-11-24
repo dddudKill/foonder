@@ -1,6 +1,7 @@
 package com.example.homework_2.ui.main
 
 import android.os.Bundle
+import android.text.TextUtils.replace
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,9 +26,9 @@ import kotlinx.coroutines.withContext
 class MainFragment : Fragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance() = MainFragment()
     }
-
     private val viewModel by viewModels<MainViewModel>()
     private val gifListAdapter = GifListAdapter { gif: Gif -> gifItemClicked(gif) }
     private val loadStateAdapter = GifsLoadStateAdapter { gifListAdapter.retry() }
@@ -50,9 +51,7 @@ class MainFragment : Fragment() {
             layoutManager = StaggeredGridLayoutManager(columns, RecyclerView.VERTICAL)
             adapter = gifListAdapter.apply {
                 stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            }
-                .withLoadStateFooter (footer = loadStateAdapter)
-
+            }.withLoadStateFooter (footer = loadStateAdapter)
         }
 
         btnRetry.setOnClickListener{
@@ -77,7 +76,7 @@ class MainFragment : Fragment() {
                     else -> null
                 }
                 errorState?.let {
-                    Toast.makeText(context, it.error.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, it.error.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -92,6 +91,12 @@ class MainFragment : Fragment() {
     }
 
     private fun gifItemClicked(gif : Gif) {
-        Toast.makeText(context, "Clicked: ${gif.gifTitle()}", Toast.LENGTH_LONG).show()
+        activity?.supportFragmentManager?.let {
+            val transaction = it.beginTransaction()
+            transaction
+                .replace(R.id.fragmentContainer, ItemFragment.newInstance(gif))
+                .addToBackStack(null)
+                .commit()
+        }
     }
 }
