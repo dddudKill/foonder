@@ -7,6 +7,8 @@ import com.example.homework_2.ServiceLocator
  class MainViewModel : ViewModel() {
     private val provider = ServiceLocator.provider()
 
-    suspend fun getGifs() = provider.getGifs()
+    fun getGifs() = provider.getGifs()
         .cachedIn(viewModelScope)
+
+     suspend fun getGif(id: String) = provider.getGif(id)
  }

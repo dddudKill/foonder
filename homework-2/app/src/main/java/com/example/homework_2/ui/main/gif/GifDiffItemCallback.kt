@@ -5,11 +5,11 @@ import com.example.homework_2.objects.Gif
 
 class GifDiffItemCallback : DiffUtil.ItemCallback<Gif>() {
     override fun areItemsTheSame(oldItem: Gif, newItem: Gif): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.gifId() == newItem.gifId()
     }
 
     override fun areContentsTheSame(oldItem: Gif, newItem: Gif): Boolean {
-        return oldItem.gifId() == newItem.gifId()
+        return oldItem.gifUrl() == newItem.gifUrl()
     }
 
 }

@@ -22,7 +22,7 @@ class GifPagingSource(private val service: IAccessor) : PagingSource<Int, Gif>()
             val response = service.getData(offset = offset, limit = limit)
             val gifsResponse = response.gifs
             val paginationResponse = response.pagination
-            val nextOffset = if (offset + NETWORK_PAGE_SIZE > paginationResponse.totalCount) null else offset + NETWORK_PAGE_SIZE
+            val nextOffset = if (offset + NETWORK_PAGE_SIZE > paginationResponse!!.totalCount) null else offset + NETWORK_PAGE_SIZE
             val prevOffset = if (offset == INITIAL_OFFSET) null else offset - NETWORK_PAGE_SIZE
             LoadResult.Page(
                 data = gifsResponse,

@@ -2,6 +2,7 @@ package com.example.homework_2.ui.main
 
 import android.os.Bundle
 import android.text.TextUtils.replace
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.example.homework_2.objects.Gif
 import com.example.homework_2.ui.main.gif.GifListAdapter
 import com.example.homework_2.ui.main.load_state.GifsLoadStateAdapter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,6 +31,7 @@ class MainFragment : Fragment() {
         @JvmStatic
         fun newInstance() = MainFragment()
     }
+
     private val viewModel by viewModels<MainViewModel>()
     private val gifListAdapter = GifListAdapter { gif: Gif -> gifItemClicked(gif) }
     private val loadStateAdapter = GifsLoadStateAdapter { gifListAdapter.retry() }
@@ -44,17 +47,18 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val btnRetry = view.findViewById<Button>(R.id.btn_retry)
-        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
 
         val columns = resources.getInteger(R.integer.columns)
         view.findViewById<RecyclerView>(R.id.recycler).apply {
             layoutManager = StaggeredGridLayoutManager(columns, RecyclerView.VERTICAL)
             adapter = gifListAdapter.apply {
-                stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            }.withLoadStateFooter (footer = loadStateAdapter)
+                stateRestorationPolicy =
+                    RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            }.withLoadStateFooter(footer = loadStateAdapter)
         }
 
-        btnRetry.setOnClickListener{
+        btnRetry.setOnClickListener {
             gifListAdapter.retry()
         }
 
@@ -62,8 +66,7 @@ class MainFragment : Fragment() {
             if (loadState.refresh is LoadState.Loading) {
                 btnRetry.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 progressBar.visibility = View.GONE
 
                 val errorState = when {
@@ -81,9 +84,9 @@ class MainFragment : Fragment() {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             withContext(Dispatchers.IO) {
-                viewModel.getGifs().collectLatest {
+                viewModel.getGifs().buffer().collectLatest {
                     gifListAdapter.submitData(it)
                 }
             }
@@ -94,7 +97,7 @@ class MainFragment : Fragment() {
         activity?.supportFragmentManager?.let {
             val transaction = it.beginTransaction()
             transaction
-                .replace(R.id.fragmentContainer, ItemFragment.newInstance(gif))
+                .replace(R.id.fragmentContainer, ItemFragment.newInstance(gif.gifId()))
                 .addToBackStack(null)
                 .commit()
         }

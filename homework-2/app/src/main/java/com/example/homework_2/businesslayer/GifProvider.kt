@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 class GifProvider(private val accessor: IAccessor) {
 
-    suspend fun getGifs(): Flow<PagingData<Gif>> {
+    fun getGifs(): Flow<PagingData<Gif>> {
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
@@ -18,4 +18,6 @@ class GifProvider(private val accessor: IAccessor) {
             pagingSourceFactory = { GifPagingSource(accessor) }
         ).flow
     }
+
+    suspend fun getGif(id: String): Gif = accessor.getGif(id).gif
 }

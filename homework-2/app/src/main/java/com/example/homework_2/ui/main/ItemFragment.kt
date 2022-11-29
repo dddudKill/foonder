@@ -7,22 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.example.homework_2.R
 import com.example.homework_2.objects.Gif
+import com.example.homework_2.ui.main.gif.GifViewHolder
 import org.w3c.dom.Text
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM1 = "gifId"
 
 class ItemFragment : Fragment() {
-    private var param1: Gif? = null
+    private var gifId: String = ""
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getSerializable(ARG_PARAM1) as Gif?
+            gifId = it.getString(ARG_PARAM1) as String
         }
     }
 
@@ -37,19 +40,20 @@ class ItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val title = view.findViewById<TextView>(R.id.item_title)
-        title.text = param1?.gifTitle()
-        val image = view.findViewById<ImageView>(R.id.image)
-        Glide.with(view)
-            .load(param1?.gifUrl())
-            .into(image)
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            val gif = viewModel.getGif(id = gifId)
+            title.text = gif.gifTitle()
+            GifViewHolder(view).bind(gif) { Unit }
+        }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: Gif) =
+        fun newInstance(gifId: String) =
             ItemFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_PARAM1, param1)
+                    putSerializable(ARG_PARAM1, gifId)
                 }
             }
     }

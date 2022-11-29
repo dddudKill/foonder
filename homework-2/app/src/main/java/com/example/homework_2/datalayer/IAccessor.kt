@@ -1,6 +1,7 @@
 package com.example.homework_2.datalayer
 
 import com.example.homework_2.objects.Data
+import com.example.homework_2.objects.DataSingle
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 const val API_KEY = "GkXGkAFHmtNjfPZoy18GALzVNOOreyeY"
@@ -16,6 +18,9 @@ interface IAccessor {
     @GET("/v1/gifs/trending")
     //@Headers("X-User-Agent: GIF")
     suspend fun getData(@Query("offset") offset: Int, @Query("limit") limit: Int): Data
+
+    @GET("/v1/gifs/{gif_id}")
+    suspend fun getGif(@Path("gif_id") id: String): DataSingle
 
 
     companion object {
@@ -36,7 +41,7 @@ interface IAccessor {
             }
 
             val client = OkHttpClient.Builder().apply {
-                //addNetworkInterceptor(loggingInterceptor)
+                addNetworkInterceptor(loggingInterceptor)
                 addNetworkInterceptor(apiInterceptor)
             }.build()
 
