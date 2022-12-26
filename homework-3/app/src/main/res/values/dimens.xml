@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_main">24sp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="content_padding">24dp</dimen>
+    <dimen name="margin_top_text">8dp</dimen>
+    <dimen name="card_view_horizontal_padding">4dp</dimen>
+    <dimen name="layout_margin_top">20dp</dimen>
+    <dimen name="card_height">48dp</dimen>
+    <dimen name="small_card_corner_radius">10dp</dimen>
+    <dimen name="card_content_padding">12dp</dimen>
+    <dimen name="proceed_button_height">64dp</dimen>
+    <dimen name="logo_big_side">240dp</dimen>
+    <dimen name="margin_top_logo">160dp</dimen>
+    <dimen name="corner_radius_logo">50dp</dimen>
+    <dimen name="logo_title_margin_top">40dp</dimen>
+    <dimen name="login_with_text_margin_top">40dp</dimen>
+    <dimen name="login_with_items_margin_top">30dp</dimen>
+    <dimen name="login_with_item_margin">10dp</dimen>
+    <dimen name="swipe_buttons_height">80dp</dimen>
+    <dimen name="layout_margin_bottom">8dp</dimen>
+</resources>
