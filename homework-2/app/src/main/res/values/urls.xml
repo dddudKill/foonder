@@ -1,4 +1,0 @@
-<resources>
-    <string name="base_url">https://api.giphy.com/</string>
-    <string name="full_url">https://api.giphy.com/v1/gifs/trending?api_key=GkXGkAFHmtNjfPZoy18GALzVNOOreyeY</string>
-</resources>

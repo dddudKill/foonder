@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">homework-2</string>
-    <string name="error">Error!</string>
-    <string name="retry">Retry</string>
-    <string name="gif_title">Gif Title</string>
-    <string name="btn_retry">Retry</string>
-</resources>
