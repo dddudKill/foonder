@@ -22,7 +22,7 @@ interface RecipeSpoonacularApi {
     suspend fun getRecipeById(@Path("id") id: Int): RecipeDetailDto
 
     @GET("recipes/findByIngredients")
-    suspend fun getRecipesByIngredients(@Query("ingredients") ingredients: List<String>): List<RecipeByIngredientsDto>
+    suspend fun getRecipesByIngredients(@Query("ingredients") ingredients: List<String>, @Query("number") number: Int?): List<RecipeByIngredientsDto>
 
     @GET("recipes/{id}/analyzedInstructions")
     suspend fun getRecipeAnalyzedInstructions(@Path("id") id: Int): List<RecipeInstructionDto>

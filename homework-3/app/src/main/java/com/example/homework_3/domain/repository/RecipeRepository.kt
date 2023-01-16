@@ -17,7 +17,7 @@ interface RecipeRepository {
 
     fun getAisles(): Flow<Resource<Map<String, List<ExtendedIngredient>>>>
 
-    fun getRecipesByIngredients(ingredients: List<ExtendedIngredient>): Flow<Resource<List<RecipeByIngredients>>>
+    fun getRecipesByIngredients(ingredients: List<ExtendedIngredient>, number: Int?): Flow<Resource<List<RecipeByIngredients>>>
 
     fun getRecipeAnalyzedInstructions(id: Int): Flow<Resource<RecipeInstruction>>
 }

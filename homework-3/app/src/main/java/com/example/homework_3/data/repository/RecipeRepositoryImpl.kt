@@ -67,10 +67,10 @@ class RecipeRepositoryImpl(
         }
     }
 
-    override fun getRecipesByIngredients(ingredients: List<ExtendedIngredient>): Flow<Resource<List<RecipeByIngredients>>> = flow {
+    override fun getRecipesByIngredients(ingredients: List<ExtendedIngredient>, number: Int?): Flow<Resource<List<RecipeByIngredients>>> = flow {
         try {
             emit(Resource.Loading<List<RecipeByIngredients>>())
-            val recipes = api.getRecipesByIngredients(ingredients.map { it.name }).map { it.toRecipeByIngredients() }
+            val recipes = api.getRecipesByIngredients(ingredients.map { it.name }, number).map { it.toRecipeByIngredients() }
             emit(Resource.Success<List<RecipeByIngredients>>(recipes))
         } catch (e: HttpException) {
             emit(Resource.Error<List<RecipeByIngredients>>(e.localizedMessage ?: "An unexpected error occurred"))

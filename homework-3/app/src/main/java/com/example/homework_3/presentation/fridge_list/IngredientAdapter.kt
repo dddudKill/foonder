@@ -10,13 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.homework_3.R
 import com.example.homework_3.domain.models.recipe_information.ExtendedIngredient
 
-class IngredientAdapter : ListAdapter<ExtendedIngredient, IngredientAdapter.IngredientViewHolder>(IngredientDifferCallback()) {
+class IngredientAdapter(val listener: OnItemCheckListener) : ListAdapter<ExtendedIngredient, IngredientAdapter.IngredientViewHolder>(IngredientDifferCallback()) {
 
-    var checkBoxStateArray = SparseBooleanArray()
-
-    internal interface OnItemCheckListener {
-        fun onItemCheck(ingredient: ExtendedIngredient)
-        fun onItemUncheck(ingredient: ExtendedIngredient)
+    interface OnItemCheckListener {
+        fun checkBoxStateChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
@@ -40,6 +37,7 @@ class IngredientAdapter : ListAdapter<ExtendedIngredient, IngredientAdapter.Ingr
             checkBox.isChecked = ingredient.isSelected
             checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 ingredient.isSelected = isChecked
+                listener.checkBoxStateChanged()
             }
         }
     }

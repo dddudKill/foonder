@@ -35,7 +35,7 @@ class StepStackAdapter : ListAdapter<Step, StepStackAdapter.StepStackViewHolder>
         protected val description = view.findViewById<TextView>(R.id.step_description)
 
         fun bind(step: Step) {
-            title.text = Constants.STEP + step.number
+            title.text = view.context.getString(R.string.step_text, step.number)
 
             val imageUrl = if (step.ingredients.isNotEmpty())
                 Constants.INGREDIENT_IMAGE_URL + step.ingredients.last().image

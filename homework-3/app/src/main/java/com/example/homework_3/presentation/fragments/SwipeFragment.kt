@@ -10,6 +10,7 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homework_3.R
@@ -52,6 +53,8 @@ class SwipeFragment : Fragment(), CardStackListener {
         retryBtn.setOnClickListener {
             recipeStackViewModel.getRecipes(ingredients!!)
         }
+
+        val buttonContainer = view.findViewById<RelativeLayout>(R.id.button_container)
 
 
         val bottomNavBar = view.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
@@ -110,12 +113,16 @@ class SwipeFragment : Fragment(), CardStackListener {
                 if (!state.isLoading && state.error.isBlank()) {
                     progressBar.visibility = View.GONE
                     retryBtn.visibility = View.GONE
+                    recipeStackView.visibility = View.VISIBLE
+                    buttonContainer.visibility = View.VISIBLE
 
                     recipeStackAdapter.submitList(state.recipes)
                 }
                 if (state.error.isNotBlank()) {
                     progressBar.visibility = View.GONE
                     retryBtn.visibility = View.VISIBLE
+                    recipeStackView.visibility = View.GONE
+                    buttonContainer.visibility = View.GONE
                     Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -135,6 +142,10 @@ class SwipeFragment : Fragment(), CardStackListener {
                     .addToBackStack(null)
                     .commit()
             }
+        }
+        // PAGING to be implemented
+        else if (recipeStackLayoutManager.topPosition == recipeStackAdapter.itemCount) {
+            recipeStackViewModel.getRecipes(ingredients!!, 12)
         }
     }
 

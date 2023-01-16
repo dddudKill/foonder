@@ -14,8 +14,8 @@ class RecipeStackViewModel : ViewModel() {
     private val _state = MutableStateFlow(RecipeStackListState())
     val state: StateFlow<RecipeStackListState> = _state
 
-    fun getRecipes(ingredients: List<ExtendedIngredient>) {
-        repository.getRecipesByIngredients(ingredients).onEach { result ->
+    fun getRecipes(ingredients: List<ExtendedIngredient>, number: Int? = null) {
+        repository.getRecipesByIngredients(ingredients, number).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = state.value.copy(

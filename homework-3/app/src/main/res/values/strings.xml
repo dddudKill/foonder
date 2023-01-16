@@ -13,4 +13,5 @@
     <string name="login_with_text">Войти с помощью</string>
     <string name="whats_cooking_text">Что сегодня готовим?</string>
     <string name="aisle_title">Молочные продукты</string>
+    <string name="step_text">Step %d</string>
 </resources>
