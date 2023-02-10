@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="12dp"
+    android:background="@color/color_background_sub"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:textColor="@color/color_sub_text"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="16sp"
+            android:queryHint="Поиск по продуктам..." />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_microphone"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">homework-3</string>
+    <string name="base_url">https://api.spoonacular.com/</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome">Приветствуем!</string>
+    <string name="welcome_sub_text">Похоже вы здесь впервые, расскажите, какие у вас есть продукты...</string>
+    <string name="search_bar_placeholder_text">Поиск по продуктам...</string>
+    <string name="proceed_button_text">Подобрать блюдо!</string>
+    <string name="retry_button_text">Retry</string>
+    <string name="recipe_title">Омлет</string>
+    <string name="logo_title">Fooder</string>
+    <string name="login_with_text">Войти с помощью</string>
+    <string name="whats_cooking_text">Что сегодня готовим?</string>
+    <string name="aisle_title">Молочные продукты</string>
+    <string name="step_text">Step %d</string>
+</resources>
